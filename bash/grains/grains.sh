@@ -6,21 +6,19 @@ set -o errexit
 set -o nounset
 
 grains_on_square() {
-  local count
   local pow=$((${1} - 1))
 
-  bc <<< "2 ^ $pow"
+  printf "%u" $((2 ** $pow))
 }
 
 grains_on_chessboard() {
   local total=0
 
   for ((i=1; i<=64; i++)); do
-    square=$(grains_on_square $i)
-    total=$(bc <<< "$total + $square")
+    total=$(($total + $(grains_on_square $i)))
   done
 
-  echo "$total"
+  printf "%u" $total
 }
 
 main() {
