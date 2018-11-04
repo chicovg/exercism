@@ -3,9 +3,9 @@
 (defn response-for
       "Returns the appropriate responses from Bob the lackadaisical teenager."
       [s]
-      (cond
-        (re-find #"^[\s]*$" s) "Fine. Be that way!"
-        (re-find #"^(?=.*[A-Z])[^a-z]*\?$" s) "Calm down, I know what I'm doing!"
-        (re-find #"^(?=.*[A-Z])[^a-z]*$" s) "Whoa, chill out!"
-        (re-find #"\?$" s) "Sure."
-        :default "Whatever."))
+      (condp re-find s
+        #"^[\s]*$" "Fine. Be that way!"
+        #"^(?=.*[A-Z])[^a-z]*\?$" "Calm down, I know what I'm doing!"
+        #"^(?=.*[A-Z])[^a-z]*$" "Whoa, chill out!"
+        #"\?$" "Sure."
+        "Whatever."))
