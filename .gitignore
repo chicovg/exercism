@@ -3,3 +3,6 @@
 
 # clojure stuff
 */**/.lein-failures
+
+# node modules
+*/**/node_modules
