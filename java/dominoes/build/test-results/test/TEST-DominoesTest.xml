@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DominoesTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2019-03-24T22:42:49" hostname="MacBook-Pro.local" time="0.011">
+  <properties/>
+  <testcase name="cantBeChainedTest" classname="DominoesTest" time="0.007"/>
+  <testcase name="needBacktrackTest" classname="DominoesTest" time="0.0"/>
+  <testcase name="singletonInputSingletonOutput" classname="DominoesTest" time="0.0"/>
+  <testcase name="nineElementsTest" classname="DominoesTest" time="0.001"/>
+  <testcase name="separateLoopsTest" classname="DominoesTest" time="0.0"/>
+  <testcase name="disconnectedDoubleLoopTest" classname="DominoesTest" time="0.0"/>
+  <testcase name="singletonCantBeChainedTest" classname="DominoesTest" time="0.001"/>
+  <testcase name="disconnectedSingleIsolatedTest" classname="DominoesTest" time="0.0"/>
+  <testcase name="emtpyInputEmptyOutputTest" classname="DominoesTest" time="0.0"/>
+  <testcase name="canReverseDominoesTest" classname="DominoesTest" time="0.0"/>
+  <testcase name="disconnectedSimpleTest" classname="DominoesTest" time="0.0"/>
+  <testcase name="threeElementsTest" classname="DominoesTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
