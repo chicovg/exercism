@@ -3,6 +3,8 @@
 
 # clojure stuff
 */**/.lein-failures
+*/**/.lein-repl-history
+**/target
 
 # node modules
 */**/node_modules

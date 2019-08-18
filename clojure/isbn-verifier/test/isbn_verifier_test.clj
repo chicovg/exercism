@@ -1,6 +1,6 @@
 (ns isbn-verifier-test
   (:require [clojure.test :refer [deftest is]]
-            [isbn-verifier :refer [isbn?]]))
+            [isbn-verifier :refer [isbn? create-isbn13]]))
 
 (deftest valid-isbn-number
   (is (= true (isbn? "3-598-21508-8"))))
@@ -43,3 +43,18 @@
 
 (deftest check-digit-of-X-should-not-be-used-for-0
   (is (= false (isbn? "3-598-21515-X"))))
+
+(deftest valid-isbn13-number
+  (is (= true (isbn? "978-1-86197-876-9"))))
+
+(deftest valid-isbn13-number-2
+  (is (= true (isbn? "9781861978769"))))
+
+(deftest invalid-isbn13-number
+  (is (= false (isbn? "978-1-86197-876-4"))))
+
+(deftest valid-isb13-created-from-valid-isbn10
+  (is (= true (isbn? (create-isbn13 "359821507X")))))
+
+(deftest create-isbn13-returns-nil-for-invalid-isbn10
+  (is (nil? (create-isbn13 "3-598-21515-X"))))
