@@ -1,5 +1,6 @@
 # ignore exercism solution files
 */**/.solution.json
+*/**/.exercism/
 
 # clojure stuff
 */**/.lein-failures
