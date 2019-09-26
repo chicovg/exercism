@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 #
 # Calculates the hamming difference between two DNA strains
 #
