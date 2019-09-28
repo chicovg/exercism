@@ -1,23 +1,5 @@
 (ns pov)
 
-(def simple-tree [:parent [:sibling] [:x]])
-(def deeply-nested
-  [:level-0
-   [:level-1
-    [:level-2
-     [:level-3
-      [:level-4
-       [:x]]]]]])
-(def cousins
-  [:grand-parent
-   [:parent
-    [:sib-1]
-    [:x]
-    [:sib-2]]
-   [:uncle
-    [:cousin-1]
-    [:cousin-2]]])
-
 (defn root-to
   "Returns a path from the root to the given node"
   [to [root & children]]
@@ -49,8 +31,24 @@
                                              vec)]
               (into reversed-root-to-from root-to-to)))))
 
-(defn of [from tree]
-
-  )
-
-;; 
+(defn of [from [root & children :as tree]]
+  "Given a node and a tree, re-parents the graph on the provided node"
+  (let [path (path-from-to root from tree)]
+    (if (empty? path)
+      nil
+      (loop [[root & children] tree
+             [_ next & rest] path
+             pov-tree nil]
+        (if (nil? root)
+          pov-tree
+          (let [children-off-path (for [[h & tail :as child] children
+                                        :when (not (= h next))]
+                                    child)
+                child-on-path (->> children
+                                   (filter #(= (first %) next))
+                                   first)
+                updated-pov-tree (-> [root]
+                                     (concat children-off-path)
+                                     (concat (if pov-tree [pov-tree] []))
+                                     vec)]
+            (recur child-on-path (cons next rest) updated-pov-tree)))))))
