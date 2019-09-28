@@ -5,7 +5,8 @@
   [num]
   (throw (IllegalArgumentException. (str "number out of range: " num))))
 
-(def text {1 "one"
+(def text {0 "zero"
+           1 "one"
            2 "two"
            3 "three"
            4 "four"
@@ -61,14 +62,13 @@
     (or
      (< num 0)
      (> num 999999999999)) (out-of-range num)
-    (= 0 num) "zero"
     (< num 14) (get text num)
     (< num 20) (upper-teens num)
     (< num 100) (double-digits num)
     :else (let [div (factor num)
-                quot (int (/ num div))
+                quotient (int (/ num div))
                 remainder (mod num div)
                 div-text (get text div)]
             (if (= remainder 0)
-              (str (number quot) " " div-text)
-              (str (number quot) " " div-text " " (number remainder))))))
+              (str (number quotient) " " div-text)
+              (str (number quotient) " " div-text " " (number remainder))))))
