@@ -9,3 +9,10 @@
 
 # node modules
 */**/node_modules
+
+# java projects
+*/**/.classpath
+*/**/.gradle
+*/**/.project
+*/**/.settings
+*/**/bin
