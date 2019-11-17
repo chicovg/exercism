@@ -2,20 +2,23 @@
 
 # pangram.sh
 #
-# Determine if a sentence is a pangram. 
+# Determine if a sentence is a pangram.
 
-main () {
-    local letters="${1//[^A-Za-z]}"
-    local lowerCase="${letters,,}"
-    local charArray=()
+main() {
+    local lowerCase="${1,,}"
 
-    for ((i=0; i<${#lowerCase}; i++)) do
-        local idx=$(printf '%d' "'${lowerCase:i:1}")
+    chars=( {a..z} )
+    n=26
 
-        charArray[$idx]=true
+    for ((i=0; i<n; i++)) do
+        if [[ ! $lowerCase =~ ${chars[$i]} ]]
+        then
+            echo "false"
+            return
+        fi
     done
 
-    [[ ${#charArray[@]} == 26 ]] && echo "true" || echo "false"
+    echo "true"
 }
 
 main "$@"
