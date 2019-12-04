@@ -7,11 +7,11 @@
 main () {
     local trimmed="${1//[^0-9A-Za-z?]/}"
 
-    if [ -z "$trimmed" ]; then
+    if [[ -z "$trimmed" ]]; then
         echo "Fine. Be that way!"
-    elif [[ $trimmed =~ [A-Z] ]] && [[ $trimmed =~ ^[^a-z]*\?$ ]]; then
+    elif [[ $trimmed = *[[:upper:]]* ]] && [[ $trimmed =~ ^[^a-z]*\?$ ]]; then
         echo "Calm down, I know what I'm doing!"
-    elif [[ $trimmed =~ [A-Z] ]] && [[ $trimmed =~ ^[^a-z]*$ ]]; then
+    elif [[ $trimmed = *[[:upper:]]* ]] && [[ $trimmed =~ ^[^a-z]*$ ]]; then
         echo "Whoa, chill out!"
     elif [[ $trimmed =~ ^.*\?$ ]]; then
         echo "Sure."
