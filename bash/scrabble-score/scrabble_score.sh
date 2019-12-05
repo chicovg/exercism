@@ -4,35 +4,37 @@
 #
 # Given a word, compute the scrabble score for that word.
 
+get_letter_score () {
+    case "${1^^}" in
+        Q | Z)
+            echo 10
+            ;;
+        J | X)
+            echo 8
+            ;;
+        K)
+            echo 5
+            ;;
+        F | H | V | W | Y)
+            echo 4
+            ;;
+        B | C | M | P)
+            echo 3
+            ;;
+        D | G)
+            echo 2
+            ;;
+        *)
+            echo 1
+            ;;
+    esac
+}
+
 main () {
     local score=0;
 
-    for (( i=0; i<${#1}; i++ )); do
-        local letter=${1:i:1}
-
-        case "${letter^^}" in
-            Q | Z)
-                (( score+=10 ))
-                ;;
-            J | X)
-                (( score+=8 ))
-                ;;
-            K)
-                (( score+=5 ))
-                ;;
-            F | H | V | W | Y)
-                (( score+=4 ))
-                ;;
-            B | C | M | P)
-                (( score+=3 ))
-                ;;
-            D | G)
-                (( score+=2 ))
-                ;;
-            *)
-                (( score+=1 ))
-                ;;
-        esac
+    for (( i=0; i < ${#1}; i++ )); do
+        (( score += $(get_letter_score ${1:i:1}) ))
     done
 
     echo $score
