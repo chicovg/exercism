@@ -19,13 +19,13 @@ main () {
         local idx=$(( length - i ))
         local digit=${trimmed:idx:1}
         
-        [[ $(( i % 2 )) -eq 0 ]] && (( digit *= 2 ))
-        [[ $digit -gt 9 ]] && (( digit -= 9 ))
+        (( i % 2 == 0 )) && (( digit *= 2 ))
+        (( digit > 9 )) && (( digit -= 9 ))
 
         (( sum += digit ))
     done
 
-    if [[ $(( sum % 10 )) -eq 0 ]]; then
+    if (( sum % 10 == 0 )); then
         echo "true"
     else
         echo "false"

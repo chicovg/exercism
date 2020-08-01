@@ -6,6 +6,7 @@
 */**/.lein-failures
 */**/.lein-repl-history
 **/target
+*/**/.nrepl-port
 
 # node modules
 */**/node_modules
@@ -16,3 +17,4 @@
 */**/.project
 */**/.settings
 */**/bin
+*/**/.nrepl-port

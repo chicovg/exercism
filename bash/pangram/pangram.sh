@@ -5,7 +5,7 @@
 # Determine if a sentence is a pangram.
 
 main() {
-    local lowerCase="${1,,}"
+    local lowercase="${1,,}"
 
     chars=( {a..z} )
     n=26
