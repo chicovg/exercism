@@ -1,7 +1,19 @@
-const isPangram = (string) => {
-  // reduce to an object, the count keys
-  // reduce to an array, with char value as index, count length
-  // iterate over alphabet search string for each char A * N
-};
+export const isPangram = (string) => {
+    const isLetter = /[A-Za-z]/;
 
-const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+    let set = new Set();
+
+    for (let char of string) {
+        if (set.size === 26) {
+            break;
+        }
+
+        if (!isLetter.test(char)) {
+            continue;
+        }
+
+        set.add(char.toLowerCase());
+    }
+
+    return set.size === 26;
+};
