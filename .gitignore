@@ -18,3 +18,6 @@
 */**/.settings
 */**/bin
 */**/.nrepl-port
+
+# javascript
+*/**/package-lock.json
