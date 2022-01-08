@@ -22,3 +22,5 @@
 # javascript
 */**/package-lock.json
 **/**/.cpcache/**
+**/.clj-kondo/*
+**/.lsp/*
