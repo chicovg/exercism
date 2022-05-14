@@ -20,7 +20,9 @@
 */**/.nrepl-port
 
 # javascript
-*/**/package-lock.json
+# */**/package-lock.json
 **/**/.cpcache/**
 **/.clj-kondo/*
 **/.lsp/*
+
+#
