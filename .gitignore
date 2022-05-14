@@ -19,10 +19,10 @@
 */**/bin
 */**/.nrepl-port
 
-# javascript
-# */**/package-lock.json
+# javascript, typescript, wasm
+*/**/package-lock.json
+*/**/yarn.lock
 **/**/.cpcache/**
 **/.clj-kondo/*
 **/.lsp/*
 
-#
