@@ -50,17 +50,22 @@ describe("ResistorColor", () => {
   });
 
   describe("Color codes", () => {
-    xtest("Black", () => {
+    test("Black", () => {
       expect(colorCode("black")).toEqual(0);
     });
 
-    xtest("White", () => {
+    test("Brown", () => {
+      expect(colorCode("brown")).toEqual(1);
+    });
+
+    test("Orange", () => {
+      expect(colorCode("orange")).toEqual(3);
+    });
+
+    test("White", () => {
       expect(colorCode("white")).toEqual(9);
     });
 
-    xtest("Orange", () => {
-      expect(colorCode("orange")).toEqual(3);
-    });
   });
 
   test("Colors", () => {
