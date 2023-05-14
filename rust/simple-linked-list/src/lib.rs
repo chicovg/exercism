@@ -43,6 +43,7 @@ impl<T> SimpleLinkedList<T> {
         } else {
             let node = *temp.unwrap();
             self.head = node.next;
+            self.length -= 1;
             return Some(node.value);
         }
     }
@@ -58,61 +59,32 @@ impl<T> SimpleLinkedList<T> {
 
     #[must_use]
     pub fn rev(&mut self) -> SimpleLinkedList<T> {
-        // create a new sll
-        // I really just need to reverse the pointers
-        // a -> b -> c
-        // a <- b <- c
-        //
-        // iterate through the list
-        // temp: a, nh: a, nh.next = null
-        // temp: b, nh: b, nh.next = a
-        // temp: c, hn: c, nh.next = b
-        //
-        //
-        //
-        // new SimpleLinkedList() {
-        //    head: nh,
-        //    length: (old length)
-        // }
+        let mut prev = None;
+        let mut curr = std::mem::take(&mut self.head);
 
-        let mut old = &self.head;
-        let mut new = None;
-
-        for _i in 0..self.length {
-            if new.is_none() {
-                new = old.as_ref();
-                old = &old.as_ref().unwrap().next;
-            } else {
-                let temp_node = new.unwrap();
-                new = Some(&Box::new(Node {
-                    value: old.unwrap().value,
-                    next: Some(temp_node),
-                }));
-            }
-
+        while let Some(mut node) = curr.take() {
+            let next = node.next.take();
+            node.next = prev.take();
+            prev = Some(node);
+            curr = next;
         }
-        // for _i in 0..self.length {
-        //     if new.is_none() {
-        //         new = std::mem::take(&mut old);
-        //         old = old.unwrap().next;
-        //     } else {
-        //         let temp = std::mem::take(&mut new);
-        //         new = std::mem::take(&mut old);
-        //         new.unwrap().next = temp;
-        //     }
-        // }
-
 
         SimpleLinkedList {
-            head: None,
+            head: prev,
             length: self.length,
         }
     }
 }
 
 impl<T> FromIterator<T> for SimpleLinkedList<T> {
-    fn from_iter<I: IntoIterator<Item = T>>(_iter: I) -> Self {
-        unimplemented!()
+    fn from_iter<I: IntoIterator<Item = T>>(iter: I) -> Self {
+        let mut l = SimpleLinkedList::new();
+
+        for i in iter {
+            l.push(i)
+        }
+
+        l
     }
 }
 
@@ -128,7 +100,14 @@ impl<T> FromIterator<T> for SimpleLinkedList<T> {
 // demands more of the student than we expect at this point in the track.
 
 impl<T> From<SimpleLinkedList<T>> for Vec<T> {
-    fn from(mut _linked_list: SimpleLinkedList<T>) -> Vec<T> {
-        unimplemented!()
+    fn from(mut linked_list: SimpleLinkedList<T>) -> Vec<T> {
+        let mut v = Vec::new();
+        let mut linked_list_rev = linked_list.rev();
+
+        while let Some(i) = linked_list_rev.pop() {
+            v.push(i)
+        }
+
+        v
     }
 }
