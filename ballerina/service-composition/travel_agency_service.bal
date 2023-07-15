@@ -14,28 +14,63 @@ service /travel on new http:Listener(9090) {
 
     // Define a resource method to arrange a tour, that accepts `POST` requests in the path `/arrangeTour`.
     // This resource should accept a value of the type `TourArrangement` that already defined below.
-    resource function () {
+    resource function post arrangeTour(@http:Payload TourArrangement tourArrangement) returns http:Created|http:BadRequest|error {
+        Preference preference = tourArrangement.preference;
 
-        // Extract Travel infomation from the travel reservation request
+	    ServiceResponse airlineReservationResponse = check airlineReservationEP->/reserve.post({
+            "name": tourArrangement.name,
+            "arrivalDate": tourArrangement.arrivalDate,
+            "departureDate": tourArrangement.departureDate,
+            "preference": preference.airline
+        });
 
-        // Create the payload skeleton to be sent to the Airline service
-        // Enrich the required fields with the information retrieved from the original travel reservation request.
-        // Airline Reservation request shold be in this format : {"name":"", "arrivalDate":"", "departureDate":"", "preference":""}
-        // If the airline reservation fails, send the response to the client with the follwing payload:
-        // {"message": "Failed to reserve airline! Provide a valid 'preference' for 'airline' and try again"}
-        // In case of a failure, status code of the response should be 400 Bad Request.
+        if airlineReservationResponse.status == FAILED {
+            http:BadRequest badRequest = {
+                body: {
+                    message: "Failed to reserve airline! Provide a valid 'preference' for 'airline' and try again"
+                }
+            };
+            return badRequest;
+        }
 
-        // Follow the same steps for 'Hotel' and 'Car Rental' services.
-        // Both hotel and car rental service requests are in the format of : {"name":"", "arrivalDate":"",
-        // "departureDate":"", "preference":""}
-        // If the hotel reservation fails, respond with the following payload:
-        // {"message": "Failed to reserve hotel! Provide a valid 'preference' for 'accommodation' and try again"}
-        // If the car rental reservation fails, response with the following payload:
-        // {"message": "Failed to rent car! Provide a valid 'preference' for 'car' and try again"}
+        ServiceResponse hotelReservationResponse = check hotelReservationEP->/reserve.post({
+            "name": tourArrangement.name,
+            "arrivalDate": tourArrangement.arrivalDate,
+            "departureDate": tourArrangement.departureDate,
+            "preference": preference.accomodation
+        });
 
-        // If all three services response positive status, send a successful message to the user
-        // with the payload {"message":"Congratulations! Your journey is ready!!"}
-        // The status code of the response should be 201 Created
+        if hotelReservationResponse.status == FAILED {
+            http:BadRequest badRequest = {
+                body: {
+                    message: "Failed to reserve hotel! Provide a valid 'preference' for 'accommodation' and try again"
+                }
+            };
+            return badRequest;
+        }
+        
+        ServiceResponse carRentalResponse = check carRentalEP->/rent.post({
+            "name": tourArrangement.name,
+            "arrivalDate": tourArrangement.arrivalDate,
+            "departureDate": tourArrangement.departureDate,
+            "preference": preference.car
+        });
+
+        if carRentalResponse.status == FAILED {
+            http:BadRequest badRequest = {
+                body: {
+                    message: "Failed to rent car! Provide a valid 'preference' for 'car' and try again"
+                }
+            };
+            return badRequest;
+        }
+
+        http:Created response = {
+            body: {
+                message: "Congratulations! Your journey is ready!!"
+            }
+        };
+        return response;
     }
 }
 
