@@ -26,3 +26,4 @@
 **/.clj-kondo/*
 **/.lsp/*
 
+/fortran/bob/build/
